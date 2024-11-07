@@ -3,6 +3,8 @@
   "displayName": "spritesheets preview",
   "description": "show each item key number for spritesheets in image",
   "version": "0.0.1",
+  "publisher": "Jsyfer",
+  "repository": "https://github.com/Jsyfer/spritesheets-preview",
   "engines": {
     "vscode": "^1.95.0"
   },
