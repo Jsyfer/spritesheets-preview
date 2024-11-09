@@ -2,7 +2,6 @@
 // Import the module and reference it with the alias vscode
 import * as vscode from "vscode";
 import path from "path";
-import fs from "fs";
 
 // This method is called when extension is activated
 // extension is activated the very first time the command is executed
@@ -58,13 +57,12 @@ export function activate(context: vscode.ExtensionContext) {
       const pixi_js = panel.webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, "preview", "js", "pixi.min.js"));
       const refer_tools_js = panel.webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, "preview", "js", "refer_tools.js"));
       // prepare image data
-      let image_path: string = target_document_list[0].uri.path;
-      const image_json = require(image_path.replace(".png", ".json"));
-      const image_data = fs.readFileSync(image_path, { encoding: "base64" });
+      const image_json = require(target_document_list[0].uri.path.replace(".png", ".json"));
+      const image_uri = panel.webview.asWebviewUri(target_document_list[0].uri);
       const links = {
+        image_uri: image_uri,
         pixi_js: pixi_js,
         refer_tools_js: refer_tools_js,
-        image_data: "data:image/png;base64," + image_data.replace("vscode-webview://", ""),
       };
       // set HTML content
       panel.webview.html = getHtmlForWebview(links);
@@ -94,7 +92,7 @@ const getHtmlForWebview = (links: any) => {
                 <title>Log Preview</title>
             </head>
             <body>
-                <img style="display:none;" src="${links.image_data}" />
+                <img style="display:none;" src="${links.image_uri}" />
                 <script src="${links.pixi_js}"></script>
                 <script type="module" src="${links.refer_tools_js}"></script>
             </body>

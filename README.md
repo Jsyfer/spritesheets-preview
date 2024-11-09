@@ -18,3 +18,7 @@ choose one of the following methods.
 ### 0.0.1
 
 Initial release.
+
+### 0.0.2
+
+improve image load
